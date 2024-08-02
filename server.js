@@ -5,7 +5,7 @@
 *  (including 3rd party web sites) or distributed to other students.
 * 
 *  Name: Hiruni Malsha Paththini Durage Student ID: 143446235 Date: 08/01/2024
-*  Online (vercel) Link: 
+*  Online (vercel) Link: https://assignment6-coral.vercel.app/
 ********************************************************************************/ 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -233,6 +233,21 @@ app.get('/student/delete/:studentNum', (req, res) => {
 
 app.use((req, res) => {
     res.status(404).send('Page Not Found');
+});
+
+// Route to get a specific course by ID
+app.get('/course/:id', (req, res) => {
+    collegeData.getCourseById(req.params.id)
+        .then((course) => {
+            if (course) {
+                res.render('course', { course });
+            } else {
+                res.status(404).send("Course Not Found");
+            }
+        })
+        .catch((err) => {
+            res.status(500).send("Server Error");
+        });
 });
 
 collegeData.initialize()
